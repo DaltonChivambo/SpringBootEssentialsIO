@@ -1,31 +1,13 @@
 package dvx.company.springboot.domain;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class Anime {
+    private Long id;
     private String name;
     private String sponsor;
-
-
-    public Anime(String name, String sponsor) {
-        this.name = name;
-        this.sponsor = sponsor;
-    }
-
-    public Anime() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSponsor() {
-        return sponsor;
-    }
-
-    public void setSponsor(String sponsor) {
-        this.sponsor = sponsor;
-    }
 }
