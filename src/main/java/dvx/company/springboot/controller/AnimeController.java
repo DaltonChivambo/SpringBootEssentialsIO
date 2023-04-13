@@ -12,12 +12,20 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RestController
+@RestController // return responseBody(Strings)
 @RequestMapping("animes")
 @Log4j2
-@RequiredArgsConstructor
+@RequiredArgsConstructor //for dependency injection
 public class AnimeController {
     private final DateUtil dateUtil;
+    /**Another way is to add dependency injection:
+     * public AnimeController(DateUtil dateUtil){
+     *     this.dateUtil = dateUtil;
+     * }
+     * or
+     * private final DateUtil dateUti; and add @RequiredArgsConstructor bellow the class;
+     *
+    **/
     private final AnimeService animeService;
 
     @GetMapping
@@ -28,7 +36,7 @@ public class AnimeController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable long id) {
-        return ResponseEntity.ok(animeService.findById(id)); //Another way to  return list and status
+        return ResponseEntity.ok(animeService.findById(id)); //return anime using id
     }
 
     @PostMapping
