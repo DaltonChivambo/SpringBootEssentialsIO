@@ -1,6 +1,8 @@
 package dvx.company.springboot.controller;
 
 import dvx.company.springboot.domain.Anime;
+import dvx.company.springboot.requests.AnimePostRequestBody;
+import dvx.company.springboot.requests.AnimePutRequestBody;
 import dvx.company.springboot.service.AnimeService;
 import dvx.company.springboot.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +20,11 @@ import java.util.List;
 @RequiredArgsConstructor //for dependency injection
 public class AnimeController {
     private final DateUtil dateUtil;
-    /**Another way is to add dependency injection:
+    /**Another way to add dependency injection:
      * public AnimeController(DateUtil dateUtil){
      *     this.dateUtil = dateUtil;
      * }
-     * or
+     * or use spring resources
      * private final DateUtil dateUti; and add @RequiredArgsConstructor bellow the class;
      *
     **/
@@ -36,13 +38,13 @@ public class AnimeController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable long id) {
-        return ResponseEntity.ok(animeService.findById(id)); //return anime using id
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id)); //return anime using id
     }
 
     @PostMapping
     //@ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
@@ -52,8 +54,8 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Anime anime){
-        animeService.replace(anime);
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
+        animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
